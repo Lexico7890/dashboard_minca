@@ -484,7 +484,7 @@ export const links = [
     title: 'Pages',
     links: [
       {
-        name: 'Servicios',
+        name: 'services',
         icon: <BsTools />,
       },
       {
@@ -3088,6 +3088,8 @@ export const SparklineAreaData = [
   { x: 3, yval: 8 },
   { x: 4, yval: 5 },
   { x: 5, yval: 10 },
+  { x: 6, yval: 7 },
+  { x: 7, yval: 13 },
 
 ];
 
