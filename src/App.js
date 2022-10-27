@@ -1,17 +1,21 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import {FiSettings} from 'react-icons/fi'
 import {TooltipComponent} from '@syncfusion/ej2-react-popups'
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components'
 import { Dashboard, Services, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line,
      Area, Bar, Pie, Financial, ColorMapping} from './pages'
 import { useStateContext } from './contexts/ContextProvider'
+import Login from './pages/login/Login'
 import './App.css'
 
-const App = () => {
-    const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
-  
+const App = ({ signOut, user }) => {
+    console.log("usuario ",user)
+    const { login, setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+    const prueba = login
     useEffect(() => {
       const currentThemeColor = localStorage.getItem('colorMode');
       const currentThemeMode = localStorage.getItem('themeMode');
@@ -22,77 +26,83 @@ const App = () => {
     }, []);
   
     return (
-      <div className={currentMode === 'Dark' ? 'dark' : ''}>
-        <BrowserRouter>
-          <div className="flex relative dark:bg-main-dark-bg">
-            <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-              <TooltipComponent
-                content="Settings"
-                position="Top"
-              >
-                <button
-                  type="button"
-                  onClick={() => setThemeSettings(true)}
-                  style={{ background: currentColor, borderRadius: '50%' }}
-                  className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+      <>
+        {
+          prueba ? <Login/> : 
+          <div className={currentMode === 'Dark' ? 'dark' : ''}>
+            <BrowserRouter>
+            <div className="flex relative dark:bg-main-dark-bg">
+              <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
+                <TooltipComponent
+                  content="Settings"
+                  position="Top"
                 >
-                  <FiSettings />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setThemeSettings(true)}
+                    style={{ background: currentColor, borderRadius: '50%' }}
+                    className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                  >
+                    <FiSettings />
+                  </button>
+    
+                </TooltipComponent>
+              </div>
+              {activeMenu ? (
+                <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+                  <Sidebar />
+                </div>
+              ) : (
+                <div className="w-0 dark:bg-secondary-dark-bg">
+                  <Sidebar />
+                </div>
+              )}
+              <div
+                className={
+                  activeMenu
+                    ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+                    : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+                }
+              >
+                <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+                  <Navbar />
+                </div>
+                <div>
+                  {themeSettings && (<ThemeSettings />)}
+    
+                  <Routes>
+                    {/**Dashboard */}
+                    <Route path='/' element={<Dashboard/>}/>
+                    <Route path='/dashboard' element={<Dashboard/>}/>
   
-              </TooltipComponent>
-            </div>
-            {activeMenu ? (
-              <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-                <Sidebar />
-              </div>
-            ) : (
-              <div className="w-0 dark:bg-secondary-dark-bg">
-                <Sidebar />
-              </div>
-            )}
-            <div
-              className={
-                activeMenu
-                  ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
-                  : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
-              }
-            >
-              <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                <Navbar />
-              </div>
-              <div>
-                {themeSettings && (<ThemeSettings />)}
+                    {/**Pages */}
+                    <Route path='/services' element={<Services/>}/>
+                    <Route path='/employees' element={<Employees/>}/>
+                    <Route path='/customers' element={<Customers/>}/>      
   
-                <Routes>
-                  {/**Dashboard */}
-                  <Route path='/' element={<Dashboard/>}/>
-                  <Route path='/dashboard' element={<Dashboard/>}/>
-
-                  {/**Pages */}
-                  <Route path='/services' element={<Services/>}/>
-                  <Route path='/employees' element={<Employees/>}/>
-                  <Route path='/customers' element={<Customers/>}/>      
-
-                  {/**Apps */}
-                  <Route path='/kanban' element={<Kanban/>}/>
-                  <Route path='/calendar' element={<Calendar/>}/>
-
-                  {/**Charts */}
-                  <Route path='/line' element={<Line/>}/>
-                  <Route path='/area' element={<Area/>}/>
-                  <Route path='/bar' element={<Bar/>}/>
-                  <Route path='/pie' element={<Pie/>}/>
-                  <Route path='/financial' element={<Financial/>}/>
-                  <Route path='/color-mapping' element={<ColorMapping/>}/>
-                  <Route path='/pyramid' element={<Pyramid/>}/>
-                  <Route path='/staked' element={<Stacked/>}/>           
-                </Routes>
+                    {/**Apps */}
+                    <Route path='/kanban' element={<Kanban/>}/>
+                    <Route path='/calendar' element={<Calendar/>}/>
+  
+                    {/**Charts */}
+                    <Route path='/line' element={<Line/>}/>
+                    <Route path='/area' element={<Area/>}/>
+                    <Route path='/bar' element={<Bar/>}/>
+                    <Route path='/pie' element={<Pie/>}/>
+                    <Route path='/financial' element={<Financial/>}/>
+                    <Route path='/color-mapping' element={<ColorMapping/>}/>
+                    <Route path='/pyramid' element={<Pyramid/>}/>
+                    <Route path='/staked' element={<Stacked/>}/>           
+                  </Routes>
+                </div>
+                <Footer />
               </div>
-              <Footer />
             </div>
-          </div>
-        </BrowserRouter>
-      </div>
+          </BrowserRouter>
+        </div>
+        }
+      </>
+      
     );
   };
 

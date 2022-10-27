@@ -1,0 +1,5 @@
+{
+  "AppSyncApiName": "dashboardminca",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false
+}

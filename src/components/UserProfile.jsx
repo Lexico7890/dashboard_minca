@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
+
+import { Amplify, API, graphqlOperation } from 'aws-amplify'
+import { getUser } from '../graphql/queries'
+import awsExports from "../aws-exports";
+Amplify.configure(awsExports);
 
 import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
 
+const initialState = {fullName: "", gender: "", phoneNumber: ""}
+
 const UserProfile = () => {
   const { currentColor } = useStateContext();
+  const [infoState, setInfoState] = useState(initialState)
+
+  useEffect(() => {
+    fetchData()
+  },[])
+
+  async function fetchData(){
+    try {
+      const userData = await API.graphql(graphqlOperation(getUser, {id: "123"}))
+      const todos = userData.data.getUser
+      setInfoState(todos)
+    } catch (err) { console.log('error fetching todos') }
+  }
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -28,9 +48,9 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> Michael Roberts </p>
-          <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> info@shop.com </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {infoState.fullName} </p>
+          <p className="text-gray-500 text-sm dark:text-gray-400">  {infoState.gender}   </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {infoState.phoneNumber} </p>
         </div>
       </div>
       <div>

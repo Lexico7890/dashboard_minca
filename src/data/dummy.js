@@ -486,14 +486,17 @@ export const links = [
       {
         name: 'services',
         icon: <BsTools />,
+        nameShow: 'Servicios'
       },
       {
-        name: 'empleados',
+        name: 'employees',
         icon: <IoMdContacts />,
+        nameShow: 'Empleados'
       },
       {
-        name: 'clientes',
+        name: 'customers',
         icon: <RiContactsLine />,
+        nameShow: 'Clientes'
       },
     ],
   },
@@ -503,18 +506,12 @@ export const links = [
       {
         name: 'calendar',
         icon: <AiOutlineCalendar />,
+        nameShow: 'calendar',
       },
       {
         name: 'kanban',
         icon: <BsKanban />,
-      },
-      {
-        name: 'editor',
-        icon: <FiEdit />,
-      },
-      {
-        name: 'color-picker',
-        icon: <BiColorFill />,
+        nameShow: 'kanban',
       },
     ],
   },

@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dashboardminca-dev-193526-authRole",
+      "UnauthRoleArn": "arn:aws:iam::725376299448:role/amplify-dashboardminca-dev-193526-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::725376299448:role/amplify-dashboardminca-dev-193526-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-dashboardminca-dev-193526-deployment",
+      "UnauthRoleName": "amplify-dashboardminca-dev-193526-unauthRole",
+      "StackName": "amplify-dashboardminca-dev-193526",
+      "StackId": "arn:aws:cloudformation:us-east-1:725376299448:stack/amplify-dashboardminca-dev-193526/ecd3f050-53fc-11ed-87c6-0eb52f930171",
+      "AmplifyAppId": "d36y9q9j5mfwrd"
+    },
+    "categories": {
+      "function": {
+        "dashboardminca812ee447": {}
+      },
+      "api": {
+        "dashboardminca": {}
+      },
+      "auth": {
+        "dashboardminca1b4c04de": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d36y9q9j5mfwrd",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
